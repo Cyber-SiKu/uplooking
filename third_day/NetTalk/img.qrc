@@ -1,0 +1,11 @@
+<RCC>
+    <qresource prefix="/img">
+        <file>img/logo.png</file>
+        <file>img/head_photo.png</file>
+        <file>img/register.ico</file>
+        <file>img/chat.ico</file>
+        <file>img/login.ico</file>
+        <file>img/add.png</file>
+        <file>img/setting.png</file>
+    </qresource>
+</RCC>
