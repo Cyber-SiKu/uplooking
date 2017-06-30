@@ -24,10 +24,12 @@ loginWidget::~loginWidget() { delete ui; }
 
 void loginWidget::on_pushButton_logIn_clicked() {
   ChatWidget *chat = new ChatWidget;
+  chat->setAttribute(Qt::WA_DeleteOnClose);
   chat->showChat();
 }
 
 void loginWidget::on_pushButton_logUp_clicked() {
   RegisterWidget *re = new RegisterWidget();
+  re->setAttribute(Qt::WA_DeleteOnClose);
   re->show();
 }

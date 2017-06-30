@@ -30,14 +30,14 @@ class Ui_RegisterWidget
 public:
     QWidget *layoutWidget;
     QHBoxLayout *horizontalLayout_5;
-    QSpacerItem *horizontalSpacer_5;
+    QSpacerItem *spacer;
     QVBoxLayout *verticalLayout_2;
     QHBoxLayout *horizontalLayout_6;
     QLabel *label_3;
-    QLineEdit *lineEditUser_2;
+    QLineEdit *lineEditUser;
     QHBoxLayout *horizontalLayout_7;
     QLabel *label_4;
-    QLineEdit *lineEditPassword_2;
+    QLineEdit *lineEditPassword;
     QSpacerItem *horizontalSpacer_6;
     QWidget *layoutWidget_2;
     QHBoxLayout *horizontalLayout_8;
@@ -56,9 +56,9 @@ public:
         horizontalLayout_5 = new QHBoxLayout(layoutWidget);
         horizontalLayout_5->setObjectName(QStringLiteral("horizontalLayout_5"));
         horizontalLayout_5->setContentsMargins(0, 0, 0, 0);
-        horizontalSpacer_5 = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
+        spacer = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
 
-        horizontalLayout_5->addItem(horizontalSpacer_5);
+        horizontalLayout_5->addItem(spacer);
 
         verticalLayout_2 = new QVBoxLayout();
         verticalLayout_2->setObjectName(QStringLiteral("verticalLayout_2"));
@@ -70,12 +70,12 @@ public:
 
         horizontalLayout_6->addWidget(label_3);
 
-        lineEditUser_2 = new QLineEdit(layoutWidget);
-        lineEditUser_2->setObjectName(QStringLiteral("lineEditUser_2"));
-        lineEditUser_2->setStyleSheet(QStringLiteral("font: 14pt \"WenQuanYi Micro Hei\";"));
-        lineEditUser_2->setAlignment(Qt::AlignCenter);
+        lineEditUser = new QLineEdit(layoutWidget);
+        lineEditUser->setObjectName(QStringLiteral("lineEditUser"));
+        lineEditUser->setStyleSheet(QStringLiteral("font: 14pt \"WenQuanYi Micro Hei\";"));
+        lineEditUser->setAlignment(Qt::AlignCenter);
 
-        horizontalLayout_6->addWidget(lineEditUser_2);
+        horizontalLayout_6->addWidget(lineEditUser);
 
 
         verticalLayout_2->addLayout(horizontalLayout_6);
@@ -88,13 +88,13 @@ public:
 
         horizontalLayout_7->addWidget(label_4);
 
-        lineEditPassword_2 = new QLineEdit(layoutWidget);
-        lineEditPassword_2->setObjectName(QStringLiteral("lineEditPassword_2"));
-        lineEditPassword_2->setStyleSheet(QStringLiteral("font: 14pt \"WenQuanYi Micro Hei\";"));
-        lineEditPassword_2->setEchoMode(QLineEdit::Password);
-        lineEditPassword_2->setAlignment(Qt::AlignCenter);
+        lineEditPassword = new QLineEdit(layoutWidget);
+        lineEditPassword->setObjectName(QStringLiteral("lineEditPassword"));
+        lineEditPassword->setStyleSheet(QStringLiteral("font: 14pt \"WenQuanYi Micro Hei\";"));
+        lineEditPassword->setEchoMode(QLineEdit::Password);
+        lineEditPassword->setAlignment(Qt::AlignCenter);
 
-        horizontalLayout_7->addWidget(lineEditPassword_2);
+        horizontalLayout_7->addWidget(lineEditPassword);
 
 
         verticalLayout_2->addLayout(horizontalLayout_7);

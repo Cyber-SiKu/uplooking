@@ -35,5 +35,6 @@ void ChatWidget::timeoutSlot() {
 
 void ChatWidget::on_pushButton_addFriens_clicked() {
   AccountWidget *acc = new AccountWidget();
+  acc->setAttribute(Qt::WA_DeleteOnClose);
   acc->show();
 }

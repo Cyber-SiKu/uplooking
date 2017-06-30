@@ -17,6 +17,7 @@ public:
 
 private slots:
   void on_pushButton_register_clicked();
+  void readyReadSlot();
 
 private:
   Ui::RegisterWidget *ui;
