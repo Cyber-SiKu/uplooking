@@ -1,0 +1,1 @@
+LDTARGE += sqlite3

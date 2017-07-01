@@ -27,14 +27,15 @@ int main(int argc, char const *argv[]) {
     exit(1);
   }
 
-  const char *sql = "create table rgsTable(no integer primary key "
-                    "autoincreatement not null,count text not null passwd text "
-                    "not null)";
+  const char *sql =
+      "create table if not exists rgsTable(no integer primary key "
+      "autoincrement not null,count text not null ,passwd text "
+      "not null)";
 
   char *errmsg = NULL;
   ret = sqlite3_exec(db, sql, NULL, NULL, &errmsg);
   if (ret != SQLITE_OK) {
-    fprintf(stderr, "sqlite3_exec():%s\n", errmsg);
+    fprintf(stderr, "sqlite3_exec():%s1\n", errmsg);
     goto ERROR1;
   }
   sqlite3_close(db);
@@ -53,12 +54,13 @@ int main(int argc, char const *argv[]) {
   inet_aton(REGISTER_SEVER_IP, &laddr.sin_addr);
 
   //收发数据包
-  struct sockaddr raddr;
+  struct sockaddr_in raddr;
   socklen_t raddrlen;
   raddrlen = sizeof(raddr);
   struct rgs_st rcvbuf;
   while (1) {
-    recvfrom(sd, &rcvbuf, sizeof(rcvbuf), 0, &raddr, &raddrlen);
+    recvfrom(sd, &rcvbuf, sizeof(rcvbuf), 0, (struct sockaddr *)&raddr,
+             &raddrlen);
     if (ret < 0) {
       perror("recvfrom()");
       goto ERROR3;
@@ -76,7 +78,8 @@ int main(int argc, char const *argv[]) {
       } else if (ret == 1) {
         rcvbuf.statues = REGISTER_STATUS_FAIL;
       }
-      sendto(sd, &rcvbuf, sizeof(rcvbuf), 0, &raddr, raddrlen);
+      sendto(sd, &rcvbuf, sizeof(rcvbuf), 0, (struct sockaddr *)&raddr,
+             raddrlen);
       exit(0);
     }
   }
@@ -103,12 +106,39 @@ static int rgshandler(const struct rgs_st *rcv) {
 
   const char *sql;
   sql = "select * from rgsTable where count = ?";
-  // TODO:finised followed
-  sqlite3_prepare_v2(sqlite3 * db, const char *zSql, int nByte,
-                     sqlite3_stmt **ppStmt, const char **pzTail);
-  sqlite3_bind_text(sqlite3_stmt *, int, const char *, int, void (*)(void *));
-  sqlite3_step();
+  sqlite3_stmt *stmt;
+  sqlite3_prepare_v2(db, sql, -1, &stmt, NULL);
+  sqlite3_bind_text(stmt, 1, rcv->count, -1, NULL);
+  ret = sqlite3_step(stmt);
+  if (ret != SQLITE_ROW && ret != SQLITE_DONE) {
+    fprintf(stderr, "%s\n", "sqlite3_step()failed");
+    goto ERROR2;
+  }
+  sqlite3_finalize(stmt);
+  if (ret == SQLITE_ROW) {
+    sqlite3_close(db);
+    //账户已存在==>注册失败
+  } else {
+    //可以注册
+    sql = "insert into rgsTable(count, passwd) values(?,?)";
+    sqlite3_stmt *stmt;
+    sqlite3_prepare_v2(db, sql, -1, &stmt, NULL);
+    sqlite3_bind_text(stmt, 1, rcv->count, -1, NULL);
+    sqlite3_bind_text(stmt, 2, rcv->password, -1, NULL);
+    ret = sqlite3_step(stmt);
+    if (ret != SQLITE_DONE) {
+      fprintf(stderr, "%s\n", "sqlite3_step() fqiled");
+      goto ERROR2;
+    }
 
+    sqlite3_finalize(stmt);
+    sqlite3_close(db);
+    return 0;
+  }
+
+ERROR2:
+  sqlite3_finalize(stmt);
+  sqlite3_close(db);
 ERROR1:
   return -1;
 }

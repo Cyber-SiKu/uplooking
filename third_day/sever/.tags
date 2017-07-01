@@ -1,0 +1,2 @@
+main	/media/siku/PE/code/实训/third_day/sever/login_server.c	/^int main(int argc, char const *argv[]) {$/;"	function	line:16	signature:(int argc, char const *argv[])
+loginhandler	/media/siku/PE/code/实训/third_day/sever/login_server.c	/^static int loginhandler(const struct login_st *rcv) {$/;"	function	line:99	file:	signature:(const struct login_st *rcv)
